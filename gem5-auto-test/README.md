@@ -23,17 +23,17 @@ You need to compile all the benchmark in folder_path
 3. ./test.sh
 
 #My workspace strucuture -Zhijie
---gem5
-----gem5
-------build
---------gem5.opt
-------configs
---------example
-----------apu_se.py
-----gem5-resources
-------src
---------gpu
----=------pannotia
-----test.sh
-----1k_128k.gr
-----result
+#--gem5
+#----gem5
+#------build
+#--------gem5.opt
+#------configs
+#--------example
+#----------apu_se.py
+#----gem5-resources
+#------src
+#--------gpu
+#---=------pannotia
+#----test.sh
+#----1k_128k.gr
+#----result
