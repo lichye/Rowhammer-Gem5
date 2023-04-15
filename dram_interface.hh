@@ -160,7 +160,7 @@ class DRAMInterface : public MemInterface
     };
 
     unsigned int MaxAct;
-    std::unordered_map<unsigned int,unsigned int> row_count;
+    std::unordered_map<Bank*,std::unordered_map<unsigned int,unsigned int>> row_count;
     std::set<unsigned int>flash_time;
     //unsigned int MaxRankAct;
 

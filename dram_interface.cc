@@ -178,18 +178,24 @@ void
 DRAMInterface::activateBank(Rank& rank_ref, Bank& bank_ref,
                        Tick act_tick, uint32_t row)
 {
-    if(row_count.find(row)!=row_count.end()){
-        row_count[row]++;
-        if(row_count[row]>MaxAct){
-            stats.maxAct++;
-            MaxAct = row_count[row];
-            //printf("Row %d new MaxAct %d\n",row,MaxAct);
-            // DPRINTF(DRAM, "Row %d new MaxAct %d\n", __func__,
-            //             row,MaxAct);
+    
+    if(row_count.find(&bank_ref)!=row_count.end()){
+        //Hence bank exists
+
+        if(row_count[&bank_ref].find(row)!=row_count[&bank_ref].end()){
+        // when the row exits
+            ++row_count[&bank_ref][row];
+            if(row_count[&bank_ref][row]>MaxAct){
+                stats.maxAct++;
+                MaxAct = row_count[&bank_ref][row];
+            }
+        }
+        else{
+            row_count[&bank_ref][row]=1;
         }
     }
     else{
-        row_count[row]=1;
+        row_count[&bank_ref][row]=1;
     }
 
     // rank_ref.rank_count++;
