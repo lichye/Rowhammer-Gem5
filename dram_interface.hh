@@ -559,7 +559,7 @@ class DRAMInterface : public MemInterface
      * @param row Index of the row
      */
     void activateBank(Rank& rank_ref, Bank& bank_ref, Tick act_tick,
-                      uint32_t row);
+                      uint32_t row,MemPacket* mem_pkt);
 
     /**
      * Precharge a given bank and also update when the precharge is
