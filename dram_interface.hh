@@ -347,12 +347,6 @@ class DRAMInterface : public MemInterface
         /** List to keep track of activate ticks */
         std::deque<Tick> actTicks;
 
-
-        //Leiqi: 
-        // [ (row_id,count),(row_id,count)];
-        
-        unsigned int rank_count;
-
         /**
          * Track when we issued the last read/write burst
          */
@@ -391,7 +385,18 @@ class DRAMInterface : public MemInterface
          * @param Return true if the rank is idle from a bank
          *        and power point of view
          */
-        bool inPwrIdleState() const { return pwrState == PWR_IDLE; }
+        bool
+        inPwrIdleState() const
+        {
+            // If powerdown is not enabled, then the ranks never go to idle
+            // states. In that case return true here to prevent checkpointing
+            // from getting stuck waiting for DRAM to be idle.
+            if (!dram.enableDRAMPowerdown) {
+                return true;
+            }
+
+            return pwrState == PWR_IDLE;
+        }
 
         /**
          * Trigger a self-refresh exit if there are entries enqueued
@@ -558,8 +563,8 @@ class DRAMInterface : public MemInterface
      * @param act_tick Time when the activation takes place
      * @param row Index of the row
      */
-    void activateBank(Rank& rank_ref, Bank& bank_ref, Tick act_tick,
-                      uint32_t row,MemPacket* mem_pkt);
+    void activateBank(Rank& rank_ref, Bank& bank_ref,
+                       Tick act_tick, uint32_t row,MemPacket* mem_pkt);
 
     /**
      * Precharge a given bank and also update when the precharge is

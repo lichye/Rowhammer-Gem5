@@ -171,14 +171,10 @@ DRAMInterface::chooseNextFRFCFS(MemPacketQueue& queue, Tick min_col_at) const
     return std::make_pair(selected_pkt_it, selected_col_at);
 }
 
-
-//Leiqi:
-//Activate a row in a bank in a rank
 void
 DRAMInterface::activateBank(Rank& rank_ref, Bank& bank_ref,
                        Tick act_tick, uint32_t row,MemPacket* mem_pkt)
-{
-    
+{   
     if(row_count.find(&bank_ref)!=row_count.end()){
         //Hence bank exists
 
@@ -197,13 +193,6 @@ DRAMInterface::activateBank(Rank& rank_ref, Bank& bank_ref,
     else{
         row_count[&bank_ref][row]=1;
     }
-
-    // rank_ref.rank_count++;
-    // if(rank_ref.rank_count>MaxRankAct){
-    //     MaxRankAct = rank_ref.rank_count;
-    //     printf("Rank new MaxAct %d\n",MaxRankAct);
-    // }
-
 
     assert(rank_ref.actTicks.size() == activationLimit);
 
@@ -376,8 +365,7 @@ DRAMInterface::prechargeBank(Rank& rank_ref, Bank& bank, Tick pre_tick,
 std::pair<Tick, Tick>
 DRAMInterface::doBurstAccess(MemPacket* mem_pkt, Tick next_burst_at,
                              const std::vector<MemPacketQueue>& queue)
-{
-
+{   
     if(abs(curTick()%64000000000)<1000000){
         int time = curTick()/64000000000;
         if(flash_time.find(time)==flash_time.end()){
@@ -386,9 +374,6 @@ DRAMInterface::doBurstAccess(MemPacket* mem_pkt, Tick next_burst_at,
             flash_time.insert(time);
         }
         
-    }
-    else{
-        //printf("time %ld dis %ld\n",curTick(),curTick()%64000000000);
     }
 
     DPRINTF(DRAM, "Timing access to addr %#x, rank/bank/row %d %d %d\n",
@@ -703,7 +688,7 @@ DRAMInterface::DRAMInterface(const DRAMInterfaceParams &_p)
       enableDRAMPowerdown(_p.enable_dram_powerdown),
       lastStatsResetTick(0),
       stats(*this)
-{
+{   
     MaxAct = 0;
 
     DPRINTF(DRAM, "Setting up DRAM Interface\n");
@@ -1114,13 +1099,14 @@ DRAMInterface::minBankPrep(const MemPacketQueue& queue,
 
                 // latest Tick for which ACT can occur without
                 // incurring additoinal delay on the data bus
-                const Tick tRCD = ctrl->inReadBusState(false) ?
-                                                 tRCD_RD : tRCD_WR;
+                const Tick tRCD = ctrl->inReadBusState(false, this) ?
+                                                tRCD_RD : tRCD_WR;
                 const Tick hidden_act_max =
                             std::max(min_col_at - tRCD, curTick());
 
                 // When is the earliest the R/W burst can issue?
-                const Tick col_allowed_at = ctrl->inReadBusState(false) ?
+                const Tick col_allowed_at = ctrl->inReadBusState(false,
+                                              this) ?
                                               ranks[i]->banks[j].rdAllowedAt :
                                               ranks[i]->banks[j].wrAllowedAt;
                 Tick col_at = std::max(col_allowed_at, act_at + tRCD);
@@ -1176,8 +1162,7 @@ DRAMInterface::Rank::Rank(const DRAMInterfaceParams &_p,
       powerEvent([this]{ processPowerEvent(); }, name()),
       wakeUpEvent([this]{ processWakeUpEvent(); }, name()),
       stats(_dram, *this)
-{   
-    rank_count = 0;
+{
     for (int b = 0; b < _p.banks_per_rank; b++) {
         banks[b].bank = b;
         // GDDR addressing of banks to BG is linear.
@@ -1227,10 +1212,10 @@ bool
 DRAMInterface::Rank::isQueueEmpty() const
 {
     // check commmands in Q based on current bus direction
-    bool no_queued_cmds = (dram.ctrl->inReadBusState(true) &&
-                          (readEntries == 0))
-                       || (dram.ctrl->inWriteBusState(true) &&
-                          (writeEntries == 0));
+    bool no_queued_cmds = (dram.ctrl->inReadBusState(true, &(this->dram))
+                          && (readEntries == 0)) ||
+                          (dram.ctrl->inWriteBusState(true, &(this->dram))
+                          && (writeEntries == 0));
     return no_queued_cmds;
 }
 
@@ -1331,10 +1316,7 @@ DRAMInterface::Rank::processWriteDoneEvent()
 
 void
 DRAMInterface::Rank::processRefreshEvent()
-{   
-    // rank_count = 0;
-    // row_count.clear();
-    
+{
     // when first preparing the refresh, remember when it was due
     if ((refreshState == REF_IDLE) || (refreshState == REF_SREF_EXIT)) {
         // remember when the refresh is due
@@ -1719,7 +1701,7 @@ DRAMInterface::Rank::processPowerEvent()
         // completed refresh event, ensure next request is scheduled
         if (!(dram.ctrl->requestEventScheduled(dram.pseudoChannel))) {
             DPRINTF(DRAM, "Scheduling next request after refreshing"
-                           " rank %d\n", rank);
+                           " rank %d, PC %d \n", rank, dram.pseudoChannel);
             dram.ctrl->restartScheduler(curTick(), dram.pseudoChannel);
         }
     }
@@ -1881,7 +1863,8 @@ DRAMInterface::Rank::resetStats() {
 bool
 DRAMInterface::Rank::forceSelfRefreshExit() const {
     return (readEntries != 0) ||
-           (dram.ctrl->inWriteBusState(true) && (writeEntries != 0));
+           (dram.ctrl->inWriteBusState(true, &(this->dram))
+            && (writeEntries != 0));
 }
 
 void
@@ -1893,11 +1876,9 @@ DRAMInterface::DRAMStats::resetStats()
 DRAMInterface::DRAMStats::DRAMStats(DRAMInterface &_dram)
     : statistics::Group(&_dram),
     dram(_dram),
-
-    
     ADD_STAT(maxAct,statistics::units::Count::get(),
             "Number of Max ACT"),
-
+    
     ADD_STAT(flushTime,statistics::units::Count::get(),
             "Total flushTime"),
 
@@ -1936,7 +1917,7 @@ DRAMInterface::DRAMStats::DRAMStats(DRAMInterface &_dram)
     ADD_STAT(readRowHitRate, statistics::units::Ratio::get(),
              "Row buffer hit rate for reads"),
     ADD_STAT(writeRowHitRate, statistics::units::Ratio::get(),
-             "Row buffer hit rate for writes"), 
+             "Row buffer hit rate for writes"),
 
     ADD_STAT(bytesPerActivate, statistics::units::Byte::get(),
              "Bytes accessed per row activation"),
