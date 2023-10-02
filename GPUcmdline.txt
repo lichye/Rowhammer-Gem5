@@ -1,0 +1,628 @@
+gem5 Simulator System.  https://www.gem5.org
+gem5 is copyrighted software; use the --copyright option for details.
+
+gem5 version 23.0.0.1
+gem5 compiled Sep  3 2023 15:49:16
+gem5 started Oct  2 2023 22:27:59
+gem5 executing on b9ce62e30dd0, pid 19
+command line: gem5/build/GCN3_X86/gem5.opt gem5/configs/example/apu_se.py --help
+
+usage: apu_se.py [-h] [-n NUM_CPUS] [--sys-voltage SYS_VOLTAGE]
+                 [--sys-clock SYS_CLOCK] [--list-mem-types]
+                 [--mem-type {CfiMemory,DDR3_1600_8x8,DDR3_2133_8x8,DDR4_2400_16x4,DDR4_2400_4x16,DDR4_2400_8x8,DDR5_4400_4x8,DDR5_6400_4x8,DDR5_8400_4x8,DRAMInterface,GDDR5_4000_2x32,HBM_1000_4H_1x128,HBM_1000_4H_1x64,HBM_2000_4H_1x64,HMC_2500_1x32,LPDDR2_S4_1066_1x32,LPDDR3_1600_1x32,LPDDR5_5500_1x16_8B_BL32,LPDDR5_5500_1x16_BG_BL16,LPDDR5_5500_1x16_BG_BL32,LPDDR5_6400_1x16_8B_BL32,LPDDR5_6400_1x16_BG_BL16,LPDDR5_6400_1x16_BG_BL32,NVMInterface,NVM_2400_1x64,QoSMemSinkInterface,SimpleMemory,WideIO_200_1x128}]
+                 [--mem-channels MEM_CHANNELS] [--mem-ranks MEM_RANKS]
+                 [--mem-size MEM_SIZE] [--enable-dram-powerdown]
+                 [--mem-channels-intlv MEM_CHANNELS_INTLV] [--memchecker]
+                 [--external-memory-system EXTERNAL_MEMORY_SYSTEM]
+                 [--tlm-memory TLM_MEMORY] [--caches] [--l2cache]
+                 [--num-dirs NUM_DIRS] [--num-l2caches NUM_L2CACHES]
+                 [--num-l3caches NUM_L3CACHES] [--l1d_size L1D_SIZE]
+                 [--l1i_size L1I_SIZE] [--l2_size L2_SIZE] [--l3_size L3_SIZE]
+                 [--l1d_assoc L1D_ASSOC] [--l1i_assoc L1I_ASSOC]
+                 [--l2_assoc L2_ASSOC] [--l3_assoc L3_ASSOC]
+                 [--cacheline_size CACHELINE_SIZE] [--ruby] [-m TICKS]
+                 [--rel-max-tick TICKS] [--maxtime MAXTIME] [-P PARAM]
+                 [--list-cpu-types]
+                 [--cpu-type {AtomicSimpleCPU,BaseAtomicSimpleCPU,BaseMinorCPU,BaseNonCachingSimpleCPU,BaseO3CPU,BaseTimingSimpleCPU,DerivO3CPU,NonCachingSimpleCPU,O3CPU,TimingSimpleCPU,TraceCPU,X86AtomicSimpleCPU,X86KvmCPU,X86MinorCPU,X86NonCachingSimpleCPU,X86O3CPU,X86TimingSimpleCPU}]
+                 [--list-bp-types] [--list-indirect-bp-types]
+                 [--bp-type {BiModeBP,LTAGE,LocalBP,MultiperspectivePerceptron64KB,MultiperspectivePerceptron8KB,MultiperspectivePerceptronTAGE64KB,MultiperspectivePerceptronTAGE8KB,TAGE,TAGE_SC_L_64KB,TAGE_SC_L_8KB,TournamentBP}]
+                 [--indirect-bp-type {SimpleIndirectPredictor}]
+                 [--list-rp-types] [--list-hwp-types]
+                 [--l1i-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+                 [--l1d-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+                 [--l2-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,StridePrefetcher,TaggedPrefetcher}]
+                 [--checker] [--cpu-clock CPU_CLOCK] [--smt]
+                 [--elastic-trace-en] [--inst-trace-file INST_TRACE_FILE]
+                 [--data-trace-file DATA_TRACE_FILE] [--dist]
+                 [--dist-sync-on-pseudo-op] [--is-switch]
+                 [--dist-rank DIST_RANK] [--dist-size DIST_SIZE]
+                 [--dist-server-name DIST_SERVER_NAME]
+                 [--dist-server-port DIST_SERVER_PORT]
+                 [--dist-sync-repeat DIST_SYNC_REPEAT]
+                 [--dist-sync-start DIST_SYNC_START]
+                 [--ethernet-linkspeed ETHERNET_LINKSPEED]
+                 [--ethernet-linkdelay ETHERNET_LINKDELAY] [-I MAXINSTS]
+                 [--work-item-id WORK_ITEM_ID] [--num-work-ids NUM_WORK_IDS]
+                 [--work-begin-cpu-id-exit WORK_BEGIN_CPU_ID_EXIT]
+                 [--work-end-exit-count WORK_END_EXIT_COUNT]
+                 [--work-begin-exit-count WORK_BEGIN_EXIT_COUNT]
+                 [--init-param INIT_PARAM] [--initialize-only]
+                 [--simpoint-profile] [--simpoint-interval SIMPOINT_INTERVAL]
+                 [--take-simpoint-checkpoints TAKE_SIMPOINT_CHECKPOINTS]
+                 [--restore-simpoint-checkpoint]
+                 [--take-checkpoints TAKE_CHECKPOINTS]
+                 [--max-checkpoints MAX_CHECKPOINTS]
+                 [--checkpoint-dir CHECKPOINT_DIR] [-r CHECKPOINT_RESTORE]
+                 [--checkpoint-at-end]
+                 [--work-begin-checkpoint-count WORK_BEGIN_CHECKPOINT_COUNT]
+                 [--work-end-checkpoint-count WORK_END_CHECKPOINT_COUNT]
+                 [--work-cpus-checkpoint-count WORK_CPUS_CHECKPOINT_COUNT]
+                 [--restore-with-cpu {AtomicSimpleCPU,BaseAtomicSimpleCPU,BaseMinorCPU,BaseNonCachingSimpleCPU,BaseO3CPU,BaseTimingSimpleCPU,DerivO3CPU,NonCachingSimpleCPU,O3CPU,TimingSimpleCPU,TraceCPU,X86AtomicSimpleCPU,X86KvmCPU,X86MinorCPU,X86NonCachingSimpleCPU,X86O3CPU,X86TimingSimpleCPU}]
+                 [--repeat-switch REPEAT_SWITCH] [-s STANDARD_SWITCH]
+                 [-p PROG_INTERVAL] [-W WARMUP_INSTS] [--bench BENCH]
+                 [-F FAST_FORWARD] [-S] [--at-instruction]
+                 [--spec-input {ref,test,train,smred,mdred,lgred}]
+                 [--arm-iset {arm,thumb,aarch64}] [--stats-root STATS_ROOT]
+                 [--override-vendor-string OVERRIDE_VENDOR_STRING] [-c CMD]
+                 [-o OPTIONS] [-e ENV] [-i INPUT] [--output OUTPUT]
+                 [--errout ERROUT] [--chroot CHROOT] [--interp-dir INTERP_DIR]
+                 [--redirects REDIRECTS] [--wait-gdb] [--cpu-only-mode]
+                 [-u NUM_COMPUTE_UNITS] [--num-cp NUM_CP]
+                 [--benchmark-root BENCHMARK_ROOT] [--cu-per-sqc CU_PER_SQC]
+                 [--cu-per-scalar-cache CU_PER_SCALAR_CACHE]
+                 [--simds-per-cu SIMDS_PER_CU] [--cu-per-sa CU_PER_SA]
+                 [--sa-per-complex SA_PER_COMPLEX]
+                 [--num-gpu-complexes NUM_GPU_COMPLEXES] [--wf-size WF_SIZE]
+                 [--sp-bypass-path-length SP_BYPASS_PATH_LENGTH]
+                 [--dp-bypass-path-length DP_BYPASS_PATH_LENGTH]
+                 [--issue-period ISSUE_PERIOD]
+                 [--glbmem-wr-bus-width GLBMEM_WR_BUS_WIDTH]
+                 [--glbmem-rd-bus-width GLBMEM_RD_BUS_WIDTH]
+                 [--shr-mem-pipes-per-cu SHR_MEM_PIPES_PER_CU]
+                 [--glb-mem-pipes-per-cu GLB_MEM_PIPES_PER_CU]
+                 [--wfs-per-simd WFS_PER_SIMD]
+                 [--registerManagerPolicy REGISTERMANAGERPOLICY]
+                 [--vreg-file-size VREG_FILE_SIZE]
+                 [--vreg-min-alloc VREG_MIN_ALLOC]
+                 [--sreg-file-size SREG_FILE_SIZE]
+                 [--sreg-min-alloc SREG_MIN_ALLOC] [--bw-scalor BW_SCALOR]
+                 [--CPUClock CPUCLOCK] [--gpu-clock GPU_CLOCK]
+                 [--cpu-voltage CPU_VOLTAGE] [--gpu-voltage GPU_VOLTAGE]
+                 [--CUExecPolicy CUEXECPOLICY] [--SegFaultDebug]
+                 [--FunctionalTLB] [--LocalMemBarrier] [--countPages]
+                 [--max-cu-tokens MAX_CU_TOKENS]
+                 [--vrf_lm_bus_latency VRF_LM_BUS_LATENCY]
+                 [--mem-req-latency MEM_REQ_LATENCY]
+                 [--mem-resp-latency MEM_RESP_LATENCY]
+                 [--scalar-mem-req-latency SCALAR_MEM_REQ_LATENCY]
+                 [--scalar-mem-resp-latency SCALAR_MEM_RESP_LATENCY]
+                 [--TLB-prefetch TLB_PREFETCH] [--pf-type PF_TYPE]
+                 [--pf-stride PF_STRIDE] [--numLdsBanks NUMLDSBANKS]
+                 [--ldsBankConflictPenalty LDSBANKCONFLICTPENALTY]
+                 [--lds-size LDS_SIZE] [--fast-forward-pseudo-op]
+                 [--num-hw-queues NUM_HW_QUEUES]
+                 [--reg-alloc-policy REG_ALLOC_POLICY] [--dgpu]
+                 [--m-type M_TYPE]
+                 [--gfx-version {gfx801,gfx803,gfx900,gfx902,gfx908,gfx90a}]
+                 [--ruby-clock RUBY_CLOCK] [--access-backing-store]
+                 [--ports PORTS] [--numa-high-bit NUMA_HIGH_BIT]
+                 [--interleaving-bits INTERLEAVING_BITS]
+                 [--xor-low-bit XOR_LOW_BIT]
+                 [--recycle-latency RECYCLE_LATENCY]
+                 [--num-subcaches NUM_SUBCACHES]
+                 [--l3-data-latency L3_DATA_LATENCY]
+                 [--l3-tag-latency L3_TAG_LATENCY]
+                 [--cpu-to-dir-latency CPU_TO_DIR_LATENCY]
+                 [--gpu-to-dir-latency GPU_TO_DIR_LATENCY]
+                 [--no-resource-stalls] [--no-tcc-resource-stalls]
+                 [--use-L3-on-WT] [--num-tbes NUM_TBES]
+                 [--l2-latency L2_LATENCY] [--num-tccs NUM_TCCS]
+                 [--sqc-size SQC_SIZE] [--sqc-assoc SQC_ASSOC]
+                 [--sqc-deadlock-threshold SQC_DEADLOCK_THRESHOLD] [--WB_L1]
+                 [--WB_L2] [--TCP_latency TCP_LATENCY]
+                 [--mandatory_queue_latency MANDATORY_QUEUE_LATENCY]
+                 [--TCC_latency TCC_LATENCY] [--tcc-size TCC_SIZE]
+                 [--tcc-assoc TCC_ASSOC] [--tcp-size TCP_SIZE]
+                 [--tcp-assoc TCP_ASSOC]
+                 [--tcp-deadlock-threshold TCP_DEADLOCK_THRESHOLD]
+                 [--max-coalesces-per-cycle MAX_COALESCES_PER_CYCLE] [--noL1]
+                 [--scalar-buffer-size SCALAR_BUFFER_SIZE]
+                 [--topology TOPOLOGY] [--mesh-rows MESH_ROWS]
+                 [--network {simple,garnet}] [--router-latency ROUTER_LATENCY]
+                 [--link-latency LINK_LATENCY]
+                 [--link-width-bits LINK_WIDTH_BITS]
+                 [--vcs-per-vnet VCS_PER_VNET]
+                 [--routing-algorithm ROUTING_ALGORITHM]
+                 [--network-fault-model]
+                 [--garnet-deadlock-threshold GARNET_DEADLOCK_THRESHOLD]
+                 [--simple-physical-channels] [--TLB-config TLB_CONFIG]
+                 [--L1TLBentries L1TLBENTRIES] [--L1TLBassoc L1TLBASSOC]
+                 [--L1AccessLatency L1ACCESSLATENCY]
+                 [--L1MissLatency L1MISSLATENCY]
+                 [--L1MaxOutstandingReqs L1MAXOUTSTANDINGREQS]
+                 [--L1AccessDistanceStat] [--tot-L1TLB-size TOT_L1TLB_SIZE]
+                 [--L2TLBentries L2TLBENTRIES] [--L2TLBassoc L2TLBASSOC]
+                 [--L2AccessLatency L2ACCESSLATENCY]
+                 [--L2MissLatency L2MISSLATENCY]
+                 [--L2MaxOutstandingReqs L2MAXOUTSTANDINGREQS]
+                 [--L2AccessDistanceStat] [--L3TLBentries L3TLBENTRIES]
+                 [--L3TLBassoc L3TLBASSOC] [--L3AccessLatency L3ACCESSLATENCY]
+                 [--L3MissLatency L3MISSLATENCY]
+                 [--L3MaxOutstandingReqs L3MAXOUTSTANDINGREQS]
+                 [--L3AccessDistanceStat]
+                 [--L1ProbesPerCycle L1PROBESPERCYCLE]
+                 [--L1CoalescingWindow L1COALESCINGWINDOW]
+                 [--L1DisableCoalescing] [--L2ProbesPerCycle L2PROBESPERCYCLE]
+                 [--L2CoalescingWindow L2COALESCINGWINDOW]
+                 [--L2DisableCoalescing] [--L3ProbesPerCycle L3PROBESPERCYCLE]
+                 [--L3CoalescingWindow L3COALESCINGWINDOW]
+                 [--L3DisableCoalescing]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -n NUM_CPUS, --num-cpus NUM_CPUS
+  --sys-voltage SYS_VOLTAGE
+                        Top-level voltage for blocks running at system power
+                        supply
+  --sys-clock SYS_CLOCK
+                        Top-level clock for blocks running at system speed
+  --list-mem-types      List available memory types
+  --mem-type {CfiMemory,DDR3_1600_8x8,DDR3_2133_8x8,DDR4_2400_16x4,DDR4_2400_4x16,DDR4_2400_8x8,DDR5_4400_4x8,DDR5_6400_4x8,DDR5_8400_4x8,DRAMInterface,GDDR5_4000_2x32,HBM_1000_4H_1x128,HBM_1000_4H_1x64,HBM_2000_4H_1x64,HMC_2500_1x32,LPDDR2_S4_1066_1x32,LPDDR3_1600_1x32,LPDDR5_5500_1x16_8B_BL32,LPDDR5_5500_1x16_BG_BL16,LPDDR5_5500_1x16_BG_BL32,LPDDR5_6400_1x16_8B_BL32,LPDDR5_6400_1x16_BG_BL16,LPDDR5_6400_1x16_BG_BL32,NVMInterface,NVM_2400_1x64,QoSMemSinkInterface,SimpleMemory,WideIO_200_1x128}
+                        type of memory to use
+  --mem-channels MEM_CHANNELS
+                        number of memory channels
+  --mem-ranks MEM_RANKS
+                        number of memory ranks per channel
+  --mem-size MEM_SIZE   Specify the physical memory size (single memory)
+  --enable-dram-powerdown
+                        Enable low-power states in DRAMInterface
+  --mem-channels-intlv MEM_CHANNELS_INTLV
+                        Memory channels interleave
+  --memchecker
+  --external-memory-system EXTERNAL_MEMORY_SYSTEM
+                        use external ports of this port_type for caches
+  --tlm-memory TLM_MEMORY
+                        use external port for SystemC TLM cosimulation
+  --caches
+  --l2cache
+  --num-dirs NUM_DIRS
+  --num-l2caches NUM_L2CACHES
+  --num-l3caches NUM_L3CACHES
+  --l1d_size L1D_SIZE
+  --l1i_size L1I_SIZE
+  --l2_size L2_SIZE
+  --l3_size L3_SIZE
+  --l1d_assoc L1D_ASSOC
+  --l1i_assoc L1I_ASSOC
+  --l2_assoc L2_ASSOC
+  --l3_assoc L3_ASSOC
+  --cacheline_size CACHELINE_SIZE
+  --ruby
+  -m TICKS, --abs-max-tick TICKS
+                        Run to absolute simulated tick specified including
+                        ticks from a restored checkpoint
+  --rel-max-tick TICKS  Simulate for specified number of ticks relative to the
+                        simulation start tick (e.g. if restoring a checkpoint)
+  --maxtime MAXTIME     Run to the specified absolute simulated time in
+                        seconds
+  -P PARAM, --param PARAM
+                        Set a SimObject parameter relative to the root node.
+                        An extended Python multi range slicing syntax can be
+                        used for arrays. For example:
+                        'system.cpu[0,1,3:8:2].max_insts_all_threads = 42'
+                        sets max_insts_all_threads for cpus 0, 1, 3, 5 and 7
+                        Direct parameters of the root object are not
+                        accessible, only parameters of its children.
+  --list-cpu-types      List available CPU types
+  --cpu-type {AtomicSimpleCPU,BaseAtomicSimpleCPU,BaseMinorCPU,BaseNonCachingSimpleCPU,BaseO3CPU,BaseTimingSimpleCPU,DerivO3CPU,NonCachingSimpleCPU,O3CPU,TimingSimpleCPU,TraceCPU,X86AtomicSimpleCPU,X86KvmCPU,X86MinorCPU,X86NonCachingSimpleCPU,X86O3CPU,X86TimingSimpleCPU}
+                        type of cpu to run with
+  --list-bp-types       List available branch predictor types
+  --list-indirect-bp-types
+                        List available indirect branch predictor types
+  --bp-type {BiModeBP,LTAGE,LocalBP,MultiperspectivePerceptron64KB,MultiperspectivePerceptron8KB,MultiperspectivePerceptronTAGE64KB,MultiperspectivePerceptronTAGE8KB,TAGE,TAGE_SC_L_64KB,TAGE_SC_L_8KB,TournamentBP}
+                        type of branch predictor to run with (if not set, use
+                        the default branch predictor of the selected CPU)
+  --indirect-bp-type {SimpleIndirectPredictor}
+                        type of indirect branch predictor to run with
+  --list-rp-types       List available replacement policy types
+  --list-hwp-types      List available hardware prefetcher types
+  --l1i-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,StridePrefetcher,TaggedPrefetcher}
+                        type of hardware prefetcher to use with the L1
+                        instruction cache. (if not set, use the default
+                        prefetcher of the selected cache)
+  --l1d-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,StridePrefetcher,TaggedPrefetcher}
+                        type of hardware prefetcher to use with the L1 data
+                        cache. (if not set, use the default prefetcher of the
+                        selected cache)
+  --l2-hwp-type {AMPMPrefetcher,BOPPrefetcher,DCPTPrefetcher,IndirectMemoryPrefetcher,IrregularStreamBufferPrefetcher,MultiPrefetcher,PIFPrefetcher,SBOOEPrefetcher,STeMSPrefetcher,SignaturePathPrefetcher,SignaturePathPrefetcherV2,SlimAMPMPrefetcher,StridePrefetcher,TaggedPrefetcher}
+                        type of hardware prefetcher to use with the L2 cache.
+                        (if not set, use the default prefetcher of the
+                        selected cache)
+  --checker
+  --cpu-clock CPU_CLOCK
+                        Clock for blocks running at CPU speed
+  --smt                 Only used if multiple programs are specified. If true,
+                        then the number of threads per cpu is same as the
+                        number of programs.
+  --elastic-trace-en    Enable capture of data dependency and instruction
+                        fetch traces using elastic trace probe.
+  --inst-trace-file INST_TRACE_FILE
+                        Instruction fetch trace file input to Elastic Trace
+                        probe in a capture simulation and Trace CPU in a
+                        replay simulation
+  --data-trace-file DATA_TRACE_FILE
+                        Data dependency trace file input to Elastic Trace
+                        probe in a capture simulation and Trace CPU in a
+                        replay simulation
+  --dist                Parallel distributed gem5 simulation.
+  --dist-sync-on-pseudo-op
+                        Use a pseudo-op to start dist-gem5 synchronization.
+  --is-switch           Select the network switch simulator process for
+                        adistributed gem5 run
+  --dist-rank DIST_RANK
+                        Rank of this system within the dist gem5 run.
+  --dist-size DIST_SIZE
+                        Number of gem5 processes within the dist gem5 run.
+  --dist-server-name DIST_SERVER_NAME
+                        Name of the message server host DEFAULT: localhost
+  --dist-server-port DIST_SERVER_PORT
+                        Message server listen port DEFAULT: 2200
+  --dist-sync-repeat DIST_SYNC_REPEAT
+                        Repeat interval for synchronisation barriers among
+                        dist-gem5 processes DEFAULT: --ethernet-linkdelay
+  --dist-sync-start DIST_SYNC_START
+                        Time to schedule the first dist synchronisation
+                        barrier DEFAULT:5200000000000t
+  --ethernet-linkspeed ETHERNET_LINKSPEED
+                        Link speed in bps DEFAULT: 10Gbps
+  --ethernet-linkdelay ETHERNET_LINKDELAY
+                        Link delay in seconds DEFAULT: 10us
+  -I MAXINSTS, --maxinsts MAXINSTS
+                        Total number of instructions to simulate (default: run
+                        forever)
+  --work-item-id WORK_ITEM_ID
+                        the specific work id for exit & checkpointing
+  --num-work-ids NUM_WORK_IDS
+                        Number of distinct work item types
+  --work-begin-cpu-id-exit WORK_BEGIN_CPU_ID_EXIT
+                        exit when work starts on the specified cpu
+  --work-end-exit-count WORK_END_EXIT_COUNT
+                        exit at specified work end count
+  --work-begin-exit-count WORK_BEGIN_EXIT_COUNT
+                        exit at specified work begin count
+  --init-param INIT_PARAM
+                        Parameter available in simulation with m5 initparam
+  --initialize-only     Exit after initialization. Do not simulate time.
+                        Useful when gem5 is run as a library.
+  --simpoint-profile    Enable basic block profiling for SimPoints
+  --simpoint-interval SIMPOINT_INTERVAL
+                        SimPoint interval in num of instructions
+  --take-simpoint-checkpoints TAKE_SIMPOINT_CHECKPOINTS
+                        <simpoint file,weight file,interval-length,warmup-
+                        length>
+  --restore-simpoint-checkpoint
+                        restore from a simpoint checkpoint taken with --take-
+                        simpoint-checkpoints
+  --take-checkpoints TAKE_CHECKPOINTS
+                        <M,N> take checkpoints at tick M and every N ticks
+                        thereafter
+  --max-checkpoints MAX_CHECKPOINTS
+                        the maximum number of checkpoints to drop
+  --checkpoint-dir CHECKPOINT_DIR
+                        Place all checkpoints in this absolute directory
+  -r CHECKPOINT_RESTORE, --checkpoint-restore CHECKPOINT_RESTORE
+                        restore from checkpoint <N>
+  --checkpoint-at-end   take a checkpoint at end of run
+  --work-begin-checkpoint-count WORK_BEGIN_CHECKPOINT_COUNT
+                        checkpoint at specified work begin count
+  --work-end-checkpoint-count WORK_END_CHECKPOINT_COUNT
+                        checkpoint at specified work end count
+  --work-cpus-checkpoint-count WORK_CPUS_CHECKPOINT_COUNT
+                        checkpoint and exit when active cpu count is reached
+  --restore-with-cpu {AtomicSimpleCPU,BaseAtomicSimpleCPU,BaseMinorCPU,BaseNonCachingSimpleCPU,BaseO3CPU,BaseTimingSimpleCPU,DerivO3CPU,NonCachingSimpleCPU,O3CPU,TimingSimpleCPU,TraceCPU,X86AtomicSimpleCPU,X86KvmCPU,X86MinorCPU,X86NonCachingSimpleCPU,X86O3CPU,X86TimingSimpleCPU}
+                        cpu type for restoring from a checkpoint
+  --repeat-switch REPEAT_SWITCH
+                        switch back and forth between CPUs with period <N>
+  -s STANDARD_SWITCH, --standard-switch STANDARD_SWITCH
+                        switch from timing to Detailed CPU after warmup period
+                        of <N>
+  -p PROG_INTERVAL, --prog-interval PROG_INTERVAL
+                        CPU Progress Interval
+  -W WARMUP_INSTS, --warmup-insts WARMUP_INSTS
+                        Warmup period in total instructions (requires
+                        --standard-switch)
+  --bench BENCH         base names for --take-checkpoint and --checkpoint-
+                        restore
+  -F FAST_FORWARD, --fast-forward FAST_FORWARD
+                        Number of instructions to fast forward before
+                        switching
+  -S, --simpoint        Use workload simpoints as an instruction offset for
+                        --checkpoint-restore or --take-checkpoint.
+  --at-instruction      Treat value of --checkpoint-restore or --take-
+                        checkpoint as a number of instructions.
+  --spec-input {ref,test,train,smred,mdred,lgred}
+                        Input set size for SPEC CPU2000 benchmarks.
+  --arm-iset {arm,thumb,aarch64}
+                        ARM instruction set.
+  --stats-root STATS_ROOT
+                        If given, dump only stats of objects under the given
+                        SimObject. SimObjects are identified with Python
+                        notation as in: system.cpu[0].mmu. All elements of an
+                        array can be selected at once with: system.cpu[:].mmu.
+                        If given multiple times, dump stats that are present
+                        under any of the roots. If not given, dump all stats.
+  --override-vendor-string OVERRIDE_VENDOR_STRING
+                        Override vendor string returned by CPUID instruction
+                        in X86.
+  -c CMD, --cmd CMD     The binary to run in syscall emulation mode.
+  -o OPTIONS, --options OPTIONS
+                        The options to pass to the binary, use around the
+                        entire string
+  -e ENV, --env ENV     Initialize workload environment from text file.
+  -i INPUT, --input INPUT
+                        Read stdin from a file.
+  --output OUTPUT       Redirect stdout to a file.
+  --errout ERROUT       Redirect stderr to a file.
+  --chroot CHROOT       The chroot option allows a user to alter the search
+                        path for processes running in SE mode. Normally, the
+                        search path would begin at the root of the filesystem
+                        (i.e. /). With chroot, a user can force the process to
+                        begin looking atsome other location (i.e.
+                        /home/user/rand_dir).The intended use is to trick
+                        sophisticated software which queries the __HOST__
+                        filesystem for information or functionality. Instead
+                        of finding files on the __HOST__ filesystem, the
+                        process will find the user's replacment files.
+  --interp-dir INTERP_DIR
+                        The interp-dir option is used for setting the
+                        interpreter's path. This will allow to load the guest
+                        dynamic linker/loader itself from the elf binary. The
+                        option points to the parent folder of the guest /lib
+                        in the host fs
+  --redirects REDIRECTS
+                        A collection of one or more redirect paths to be used
+                        in syscall emulation.Usage: gem5.opt [...] --redirects
+                        /dir1=/path/to/host/dir1 --redirects
+                        /dir2=/path/to/host/dir2
+  --wait-gdb            Wait for remote GDB to connect.
+  --cpu-only-mode       APU mode. Used to take care of problems in Ruby.py
+                        while running APU protocols
+  -u NUM_COMPUTE_UNITS, --num-compute-units NUM_COMPUTE_UNITS
+                        number of GPU compute units
+  --num-cp NUM_CP       Number of GPU Command Processors (CP)
+  --benchmark-root BENCHMARK_ROOT
+                        Root of benchmark directory tree
+  --cu-per-sqc CU_PER_SQC
+                        number of CUssharing an SQC (icache, and thus icache
+                        TLB)
+  --cu-per-scalar-cache CU_PER_SCALAR_CACHE
+                        Number of CUs sharing a scalar cache
+  --simds-per-cu SIMDS_PER_CU
+                        SIMD unitsper CU
+  --cu-per-sa CU_PER_SA
+                        Number of CUs per shader array. This must be a
+                        multiple of options.cu-per-sqc and options.cu-per-
+                        scalar
+  --sa-per-complex SA_PER_COMPLEX
+                        Number of shader arrays per complex
+  --num-gpu-complexes NUM_GPU_COMPLEXES
+                        Number of GPU complexes
+  --wf-size WF_SIZE     Wavefront size(in workitems)
+  --sp-bypass-path-length SP_BYPASS_PATH_LENGTH
+                        Number of stages of bypass path in vector ALU for
+                        Single Precision ops
+  --dp-bypass-path-length DP_BYPASS_PATH_LENGTH
+                        Number of stages of bypass path in vector ALU for
+                        Double Precision ops
+  --issue-period ISSUE_PERIOD
+                        Number of cycles per vector instruction issue period
+  --glbmem-wr-bus-width GLBMEM_WR_BUS_WIDTH
+                        VGPR to Coalescer (Global Memory) data bus width in
+                        bytes
+  --glbmem-rd-bus-width GLBMEM_RD_BUS_WIDTH
+                        Coalescer to VGPR (Global Memory) data bus width in
+                        bytes
+  --shr-mem-pipes-per-cu SHR_MEM_PIPES_PER_CU
+                        Number of Shared Memory pipelines per CU
+  --glb-mem-pipes-per-cu GLB_MEM_PIPES_PER_CU
+                        Number of Global Memory pipelines per CU
+  --wfs-per-simd WFS_PER_SIMD
+                        Number of WF slots per SIMD
+  --registerManagerPolicy REGISTERMANAGERPOLICY
+                        Register manager policy
+  --vreg-file-size VREG_FILE_SIZE
+                        number of physical vector registers per SIMD
+  --vreg-min-alloc VREG_MIN_ALLOC
+                        Minimum number of registers that can be allocated from
+                        the VRF. The total number of registers will be aligned
+                        to this value.
+  --sreg-file-size SREG_FILE_SIZE
+                        number of physical vector registers per SIMD
+  --sreg-min-alloc SREG_MIN_ALLOC
+                        Minimum number of registers that can be allocated from
+                        the SRF. The total number of registers will be aligned
+                        to this value.
+  --bw-scalor BW_SCALOR
+                        bandwidth scalor for scalability analysis
+  --CPUClock CPUCLOCK   CPU clock
+  --gpu-clock GPU_CLOCK
+                        GPU clock
+  --cpu-voltage CPU_VOLTAGE
+                        CPU voltage domain
+  --gpu-voltage GPU_VOLTAGE
+                        CPU voltage domain
+  --CUExecPolicy CUEXECPOLICY
+                        WF exec policy (OLDEST-FIRST, ROUND-ROBIN)
+  --SegFaultDebug       checks for GPU seg fault before TLB access
+  --FunctionalTLB       Assumes TLB has no latency
+  --LocalMemBarrier     Barrier does not wait for writethroughs to complete
+  --countPages          Count Page Accesses and output in per-CU output files
+  --max-cu-tokens MAX_CU_TOKENS
+                        Number of coalescer tokens per CU
+  --vrf_lm_bus_latency VRF_LM_BUS_LATENCY
+                        Latency while accessing shared memory
+  --mem-req-latency MEM_REQ_LATENCY
+                        Latency for requests from the cu to ruby.
+  --mem-resp-latency MEM_RESP_LATENCY
+                        Latency for responses from ruby to the cu.
+  --scalar-mem-req-latency SCALAR_MEM_REQ_LATENCY
+                        Latency for scalar requests from the cu to ruby.
+  --scalar-mem-resp-latency SCALAR_MEM_RESP_LATENCY
+                        Latency for scalar responses from ruby to the cu.
+  --TLB-prefetch TLB_PREFETCH
+                        prefetch depth for TLBs
+  --pf-type PF_TYPE     type of prefetch: PF_CU, PF_WF, PF_PHASE, PF_STRIDE
+  --pf-stride PF_STRIDE
+                        set prefetch stride
+  --numLdsBanks NUMLDSBANKS
+                        number of physical banks per LDS module
+  --ldsBankConflictPenalty LDSBANKCONFLICTPENALTY
+                        number of cycles per LDS bank conflict
+  --lds-size LDS_SIZE   Size of the LDS in bytes
+  --fast-forward-pseudo-op
+                        fast forward using kvm until the m5_switchcpu pseudo-
+                        op is encountered, then switch cpus. subsequent
+                        m5_switchcpu pseudo-ops will toggle back and forth
+  --num-hw-queues NUM_HW_QUEUES
+                        number of hw queues in packet processor
+  --reg-alloc-policy REG_ALLOC_POLICY
+                        register allocation policy (simple/dynamic)
+  --dgpu                Configure the system as a dGPU instead of an APU. The
+                        dGPU config has its own local memory pool and is not
+                        coherent with the host through hardware. Data is
+                        transfered from host to device memory using runtime
+                        calls that copy data over a PCIe-like IO bus.
+  --m-type M_TYPE       Default Mtype for GPU memory accesses. This is the
+                        value used for all memory accesses on an APU and is
+                        the default mode for dGPU unless explicitly
+                        overwritten by the driver on a per-page basis. Valid
+                        values are between 0-7
+  --gfx-version {gfx801,gfx803,gfx900,gfx902,gfx908,gfx90a}
+                        Gfx version for gpuNote: gfx902 is not fully supported
+                        by ROCm
+  --ruby-clock RUBY_CLOCK
+                        Clock for blocks running at Ruby system's speed
+  --access-backing-store
+                        Should ruby maintain a second copy of memory
+  --ports PORTS         used of transitions per cycle which is a proxy for the
+                        number of ports.
+  --numa-high-bit NUMA_HIGH_BIT
+                        high order address bit to use for numa mapping. 0 =
+                        highest bit, not specified = lowest bit
+  --interleaving-bits INTERLEAVING_BITS
+                        number of bits to specify interleaving in directory,
+                        memory controllers and caches. 0 = not specified
+  --xor-low-bit XOR_LOW_BIT
+                        hashing bit for channel selectionsee MemConfig for
+                        explanation of the defaultparameter. If set to 0,
+                        xor_high_bit is alsoset to 0.
+  --recycle-latency RECYCLE_LATENCY
+                        Recycle latency for ruby controller input buffers
+  --num-subcaches NUM_SUBCACHES
+  --l3-data-latency L3_DATA_LATENCY
+  --l3-tag-latency L3_TAG_LATENCY
+  --cpu-to-dir-latency CPU_TO_DIR_LATENCY
+  --gpu-to-dir-latency GPU_TO_DIR_LATENCY
+  --no-resource-stalls
+  --no-tcc-resource-stalls
+  --use-L3-on-WT
+  --num-tbes NUM_TBES
+  --l2-latency L2_LATENCY
+  --num-tccs NUM_TCCS   number of TCC banks in the GPU
+  --sqc-size SQC_SIZE   SQC cache size
+  --sqc-assoc SQC_ASSOC
+                        SQC cache assoc
+  --sqc-deadlock-threshold SQC_DEADLOCK_THRESHOLD
+                        Set the SQC deadlock threshold to some value
+  --WB_L1               writeback L1
+  --WB_L2               writeback L2
+  --TCP_latency TCP_LATENCY
+                        In combination with the number of banks for the TCP,
+                        this determines how many requests can happen per cycle
+                        (i.e., the bandwidth)
+  --mandatory_queue_latency MANDATORY_QUEUE_LATENCY
+                        Hit latency for TCP
+  --TCC_latency TCC_LATENCY
+                        TCC latency
+  --tcc-size TCC_SIZE   agregate tcc size
+  --tcc-assoc TCC_ASSOC
+                        tcc assoc
+  --tcp-size TCP_SIZE   tcp size
+  --tcp-assoc TCP_ASSOC
+                        tcp assoc
+  --tcp-deadlock-threshold TCP_DEADLOCK_THRESHOLD
+                        Set the TCP deadlock threshold to some value
+  --max-coalesces-per-cycle MAX_COALESCES_PER_CYCLE
+                        Maximum insts that may coalesce in a cycle
+  --noL1                bypassL1
+  --scalar-buffer-size SCALAR_BUFFER_SIZE
+                        Size of the mandatory queue in the GPU scalar cache
+                        controller
+  --topology TOPOLOGY   check configs/topologies for complete set
+  --mesh-rows MESH_ROWS
+                        the number of rows in the mesh topology
+  --network {simple,garnet}
+                        'simple'|'garnet' (garnet2.0 will be deprecated.)
+  --router-latency ROUTER_LATENCY
+                        number of pipeline stages in the garnet router. Has to
+                        be >= 1. Can be over-ridden on a per router basis in
+                        the topology file.
+  --link-latency LINK_LATENCY
+                        latency of each link the simple/garnet networks. Has
+                        to be >= 1. Can be over-ridden on a per link basis in
+                        the topology file.
+  --link-width-bits LINK_WIDTH_BITS
+                        width in bits for all links inside garnet.
+  --vcs-per-vnet VCS_PER_VNET
+                        number of virtual channels per virtual network inside
+                        garnet network.
+  --routing-algorithm ROUTING_ALGORITHM
+                        routing algorithm in network. 0: weight-based table 1:
+                        XY (for Mesh. see garnet/RoutingUnit.cc) 2: Custom
+                        (see garnet/RoutingUnit.cc
+  --network-fault-model
+                        enable network fault model: see
+                        src/mem/ruby/network/fault_model/
+  --garnet-deadlock-threshold GARNET_DEADLOCK_THRESHOLD
+                        network-level deadlock threshold.
+  --simple-physical-channels
+                        SimpleNetwork links uses a separate physical channel
+                        for each virtual network
+  --TLB-config TLB_CONFIG
+                        Options are: perCU (default), mono, 2CU, or perLane
+  --L1TLBentries L1TLBENTRIES
+  --L1TLBassoc L1TLBASSOC
+  --L1AccessLatency L1ACCESSLATENCY
+                        latency in gpu cycles
+  --L1MissLatency L1MISSLATENCY
+                        latency (in gpu cycles) of a page walk, if this is a
+                        last level TLB
+  --L1MaxOutstandingReqs L1MAXOUTSTANDINGREQS
+  --L1AccessDistanceStat
+  --tot-L1TLB-size TOT_L1TLB_SIZE
+  --L2TLBentries L2TLBENTRIES
+  --L2TLBassoc L2TLBASSOC
+  --L2AccessLatency L2ACCESSLATENCY
+                        latency in gpu cycles
+  --L2MissLatency L2MISSLATENCY
+                        latency (in gpu cycles) of a page walk, if this is a
+                        last level TLB
+  --L2MaxOutstandingReqs L2MAXOUTSTANDINGREQS
+  --L2AccessDistanceStat
+  --L3TLBentries L3TLBENTRIES
+  --L3TLBassoc L3TLBASSOC
+  --L3AccessLatency L3ACCESSLATENCY
+                        latency in gpu cycles
+  --L3MissLatency L3MISSLATENCY
+                        latency (in gpu cycles) of a page walk
+  --L3MaxOutstandingReqs L3MAXOUTSTANDINGREQS
+  --L3AccessDistanceStat
+  --L1ProbesPerCycle L1PROBESPERCYCLE
+  --L1CoalescingWindow L1COALESCINGWINDOW
+  --L1DisableCoalescing
+  --L2ProbesPerCycle L2PROBESPERCYCLE
+  --L2CoalescingWindow L2COALESCINGWINDOW
+  --L2DisableCoalescing
+  --L3ProbesPerCycle L3PROBESPERCYCLE
+  --L3CoalescingWindow L3COALESCINGWINDOW
+  --L3DisableCoalescing
