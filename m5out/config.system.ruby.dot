@@ -1,0 +1,32 @@
+graph G {
+rankdir=LR;
+"system.ruby.network.ext_links00.int_node" [color="#000000", fillcolor="#cce6fc", fontcolor="#000000", fontname=Arial, fontsize=14, label="R 0", shape=Mrecord, style="rounded, filled"];
+"system.ruby.network.ext_links01.int_node" [color="#000000", fillcolor="#cce6fc", fontcolor="#000000", fontname=Arial, fontsize=14, label="R 1", shape=Mrecord, style="rounded, filled"];
+"system.ruby.network.ext_links03.int_node" [color="#000000", fillcolor="#cce6fc", fontcolor="#000000", fontname=Arial, fontsize=14, label="R 2", shape=Mrecord, style="rounded, filled"];
+"system.ruby.network.ext_links00.int_node" -- "system.ruby.network.ext_links01.int_node"  [color="#042d50", dir=forward, weight=0.5];
+"system.ruby.network.ext_links00.int_node" -- "system.ruby.network.ext_links03.int_node"  [color="#042d50", dir=forward, weight=0.5];
+"system.ruby.dir_cntrl0" [color="#000000", fillcolor="#e5bcd0", fontcolor="#000000", fontname=Arial, fontsize=14, label="ruby.dir_cntrl0", shape=Mrecord, style="rounded, filled"];
+"system.ruby.dir_cntrl0" -- "system.ruby.network.ext_links00.int_node"  [color="#381526", dir=both, weight=1.0];
+"system.ruby.cp_cntrl0" [color="#000000", fillcolor="#e5bcd0", fontcolor="#000000", fontname=Arial, fontsize=14, label="ruby.cp_cntrl0", shape=Mrecord, style="rounded, filled"];
+"system.ruby.cp_cntrl0" -- "system.ruby.network.ext_links01.int_node"  [color="#381526", dir=both, weight=1.0];
+"system.ruby.cp_cntrl1" [color="#000000", fillcolor="#e5bcd0", fontcolor="#000000", fontname=Arial, fontsize=14, label="ruby.cp_cntrl1", shape=Mrecord, style="rounded, filled"];
+"system.ruby.cp_cntrl1" -- "system.ruby.network.ext_links01.int_node"  [color="#381526", dir=both, weight=1.0];
+"system.ruby.tcp_cntrl0" [color="#000000", fillcolor="#e5bcd0", fontcolor="#000000", fontname=Arial, fontsize=14, label="ruby.tcp_cntrl0", shape=Mrecord, style="rounded, filled"];
+"system.ruby.tcp_cntrl0" -- "system.ruby.network.ext_links03.int_node"  [color="#381526", dir=both, weight=1.0];
+"system.ruby.tcp_cntrl1" [color="#000000", fillcolor="#e5bcd0", fontcolor="#000000", fontname=Arial, fontsize=14, label="ruby.tcp_cntrl1", shape=Mrecord, style="rounded, filled"];
+"system.ruby.tcp_cntrl1" -- "system.ruby.network.ext_links03.int_node"  [color="#381526", dir=both, weight=1.0];
+"system.ruby.tcp_cntrl2" [color="#000000", fillcolor="#e5bcd0", fontcolor="#000000", fontname=Arial, fontsize=14, label="ruby.tcp_cntrl2", shape=Mrecord, style="rounded, filled"];
+"system.ruby.tcp_cntrl2" -- "system.ruby.network.ext_links03.int_node"  [color="#381526", dir=both, weight=1.0];
+"system.ruby.tcp_cntrl3" [color="#000000", fillcolor="#e5bcd0", fontcolor="#000000", fontname=Arial, fontsize=14, label="ruby.tcp_cntrl3", shape=Mrecord, style="rounded, filled"];
+"system.ruby.tcp_cntrl3" -- "system.ruby.network.ext_links03.int_node"  [color="#381526", dir=both, weight=1.0];
+"system.ruby.sqc_cntrl0" [color="#000000", fillcolor="#e5bcd0", fontcolor="#000000", fontname=Arial, fontsize=14, label="ruby.sqc_cntrl0", shape=Mrecord, style="rounded, filled"];
+"system.ruby.sqc_cntrl0" -- "system.ruby.network.ext_links03.int_node"  [color="#381526", dir=both, weight=1.0];
+"system.ruby.scalar_cntrl0" [color="#000000", fillcolor="#e5bcd0", fontcolor="#000000", fontname=Arial, fontsize=14, label="ruby.scalar_cntrl0", shape=Mrecord, style="rounded, filled"];
+"system.ruby.scalar_cntrl0" -- "system.ruby.network.ext_links03.int_node"  [color="#381526", dir=both, weight=1.0];
+"system.ruby.tcc_cntrl0" [color="#000000", fillcolor="#e5bcd0", fontcolor="#000000", fontname=Arial, fontsize=14, label="ruby.tcc_cntrl0", shape=Mrecord, style="rounded, filled"];
+"system.ruby.tcc_cntrl0" -- "system.ruby.network.ext_links03.int_node"  [color="#381526", dir=both, weight=1.0];
+"system.dma_cntrl0" [color="#000000", fillcolor="#e5bcd0", fontcolor="#000000", fontname=Arial, fontsize=14, label=dma_cntrl0, shape=Mrecord, style="rounded, filled"];
+"system.dma_cntrl0" -- "system.ruby.network.ext_links03.int_node"  [color="#381526", dir=both, weight=1.0];
+"system.dma_cntrl1" [color="#000000", fillcolor="#e5bcd0", fontcolor="#000000", fontname=Arial, fontsize=14, label=dma_cntrl1, shape=Mrecord, style="rounded, filled"];
+"system.dma_cntrl1" -- "system.ruby.network.ext_links03.int_node"  [color="#381526", dir=both, weight=1.0];
+}

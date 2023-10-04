@@ -160,7 +160,9 @@ class DRAMInterface : public MemInterface
     };
 
     unsigned int MaxAct;
+    unsigned int totalMaxAct;
     std::unordered_map<Bank*,std::unordered_map<unsigned int,unsigned int>> row_count;
+    std::unordered_map<Bank*,std::unordered_map<unsigned int,unsigned int>> total_row_count;
     std::set<unsigned int>flash_time;
     //unsigned int MaxRankAct;
 
@@ -593,6 +595,7 @@ class DRAMInterface : public MemInterface
         //Leiqi:
         /*  Max of ACT for one row */
         statistics::Scalar maxAct;
+        statistics::Scalar totalMaxAct;
         statistics::Scalar flushTime;
 
         /** total number of DRAM bursts serviced */

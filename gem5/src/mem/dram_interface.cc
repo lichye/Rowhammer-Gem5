@@ -181,9 +181,14 @@ DRAMInterface::activateBank(Rank& rank_ref, Bank& bank_ref,
         if(row_count[&bank_ref].find(row)!=row_count[&bank_ref].end()){
         // when the row exits
             ++row_count[&bank_ref][row];
+            ++total_row_count[&bank_ref][row];
             if(row_count[&bank_ref][row]>MaxAct){
                 stats.maxAct++;
                 MaxAct = row_count[&bank_ref][row];
+            }
+            if(total_row_count[&bank_ref][row]>totalMaxAct){
+                stats.totalMaxAct++;
+                totalMaxAct = total_row_count[&bank_ref][row];
             }
         }
         else{
@@ -690,6 +695,8 @@ DRAMInterface::DRAMInterface(const DRAMInterfaceParams &_p)
       stats(*this)
 {   
     MaxAct = 0;
+    
+    totalMaxAct = 0;
 
     DPRINTF(DRAM, "Setting up DRAM Interface\n");
 
@@ -1879,6 +1886,9 @@ DRAMInterface::DRAMStats::DRAMStats(DRAMInterface &_dram)
     ADD_STAT(maxAct,statistics::units::Count::get(),
             "Number of Max ACT"),
     
+    ADD_STAT(totalMaxAct,statistics::units::Count::get(),
+            "Number of total ACT"),
+
     ADD_STAT(flushTime,statistics::units::Count::get(),
             "Total flushTime"),
 
