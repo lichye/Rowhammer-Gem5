@@ -1,0 +1,1 @@
+gem5/build/GCN3_X86/gem5.opt gem5/configs/example/apu_se.py -n3 --tcp-size=262144 --tcp-assoc=16 --tcc-size=67108864 --tcc-assoc=16 --mem-size=8GB --benchmark-root=gem5-resources/src/gpu/pannotia/bc/bin -c bc.gem5 --options="1k_128k.gr"
