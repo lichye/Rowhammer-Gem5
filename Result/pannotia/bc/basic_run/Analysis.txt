@@ -1,51 +1,10 @@
-system.cpu3.CUs0.globalMemInsts               1,994,113
-                
-                privateMemInst                0
-                LDSMemInst                    0
+system.mem_ctrls.dram.maxAct                    61624                       # Number of Max ACT (Count)
+system.mem_ctrls.dram.totalMaxAct              168776                       # Number of total ACT (Count)
+
+
 
 In GPU:
-system.cpu3.CUs0.globalMemInsts               1,994,113
-system.cpu3.CUs1.globalMemInsts               1,902,542
-system.cpu3.CUs2.globalMemInsts               1,910,844
-system.cpu3.CUs3.globalMemInsts               1,915,086
-total:           globalMemInsts               7,722,585
+system.cpu3.CUs0.globalMemInsts               1,260,864                       # Number of memory instructions sent to the global segment (Unspecified)
 
-L1-0:
-"assoc": 16,
-PLRU,
-"size": 16384, （16KB)
-"start_index_bit": 6,
-"tagAccessLatency": 4,
-"tagArrayBanks": 16
-
-system.ruby.tcp_cntrl0.L1cache.m_demand_hits     14,685,992                       # Number of cache demand hits (Unspecified)
-system.ruby.tcp_cntrl0.L1cache.m_demand_misses      5,523,689                       # Number of cache demand misses (Unspecified)
-system.ruby.tcp_cntrl0.L1cache.m_demand_accesses     20,209,681                       # Number of cache demand accesses (Unspecified)
-
-L1-1:
-system.ruby.tcp_cntrl1.L1cache.m_demand_hits     14,476,163                       # Number of cache demand hits (Unspecified)
-system.ruby.tcp_cntrl1.L1cache.m_demand_misses      5,791,179                       # Number of cache demand misses (Unspecified)
-system.ruby.tcp_cntrl1.L1cache.m_demand_accesses     20,267,342                       # Number of cache demand accesses (Unspecified)
-
-L1-2:
-system.ruby.tcp_cntrl2.L1cache.m_demand_hits     14,469,310                       # Number of cache demand hits (Unspecified)
-system.ruby.tcp_cntrl2.L1cache.m_demand_misses      5,625,007                       # Number of cache demand misses (Unspecified)
-system.ruby.tcp_cntrl2.L1cache.m_demand_accesses     20,094,317                       # Number of cache demand accesses (Unspecified)
-
-L1-3:
-system.ruby.tcp_cntrl3.L1cache.m_demand_hits     1,385,9701                       # Number of cache demand hits (Unspecified)
-system.ruby.tcp_cntrl3.L1cache.m_demand_misses      6,255,688                       # Number of cache demand misses (Unspecified)
-system.ruby.tcp_cntrl3.L1cache.m_demand_accesses     20,115,389                       # Number of cache demand accesses (Unspecified)
-
-
-L2-level:
-"assoc": 16,
-"size": 262144.0 (256KB)
-
-system.ruby.tcc_cntrl0.L2cache.m_demand_hits     20,097,031                       # Number of cache demand hits (Unspecified)
-system.ruby.tcc_cntrl0.L2cache.m_demand_misses      8,762,933                       # Number of cache demand misses (Unspecified)
-system.ruby.tcc_cntrl0.L2cache.m_demand_accesses     28,859,964                       # Number of cache demand accesses (Unspecified)
-
-
-system.mem_ctrls.dram.readBursts              5,741,381                       # Number of DRAM read bursts (Count)
-system.mem_ctrls.dram.writeBursts             6,258,524                       # Number of DRAM write bursts (Count)
+system.mem_ctrls.readBursts                  17,180,744                       # Number of controller read bursts, including those serviced by the write queue (Count)
+system.mem_ctrls.writeBursts                 19,907,111                       # Number of controller write bursts, including those merged in the write queue (Count)
