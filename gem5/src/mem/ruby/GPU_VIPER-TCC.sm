@@ -82,6 +82,7 @@ machine(MachineType:TCC, "TCC Cache")
     IV, AccessPermission:Busy,      desc="Waiting for Data";
     WI, AccessPermission:Busy,      desc="Waiting on Writethrough Ack";
     A, AccessPermission:Busy,       desc="Invalid waiting on atomici Data";
+    //VAV, AccessPermission::Busy,     desc="Valid waiting on atomici Data";
   }
 
   enumeration(RequestType, desc="To communicate stats from transitions to recordStats") {
@@ -789,16 +790,18 @@ machine(MachineType:TCC, "TCC Cache")
     st_stallAndWaitRequest;
   }
 
-  transition(V, Atomic, A) {TagArrayRead} {
+  //Leiqi:
+  //Why a Valid L2 has to been remove
+  transition(V, Atomic) {TagArrayRead} {
     p_profileHit;
-    i_invL2;
-    t_allocateTBE;
-    at_atomicThrough;
-    ina_incrementNumAtomics;
+    //i_invL2;
+    //t_allocateTBE;
+    //at_atomicThrough;
+    //ina_incrementNumAtomics;
     p_popRequestQueue;
   }
 
-transition(I, Atomic, A) {TagArrayRead} {
+  transition(I, Atomic, A) {TagArrayRead} {
     p_profileMiss;
     i_invL2;
     t_allocateTBE;
@@ -944,6 +947,10 @@ transition(I, Atomic, A) {TagArrayRead} {
     dt_deallocateTBE;
   }
 
+
+  //Leiqi:
+  //When Atomic receive the data from Memory
+  //Send response to CPU, reduce the atomic 
   transition(A, Data) {TagArrayRead, TagArrayWrite, DataArrayWrite} {
     a_allocateBlock;
     ar_sendAtomicResponse;
