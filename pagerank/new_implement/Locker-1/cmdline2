@@ -1,5 +1,5 @@
 docker run -it --rm -v ${PWD}:${PWD} -w ${PWD} -u root gcr.io/gem5-test/gcn-gpu
-cd src/gpu/pannotia/pagerank
+cd gem5-resources/src/gpu/pannotia/pagerank2
 make clean
 make gem5-fusion
 

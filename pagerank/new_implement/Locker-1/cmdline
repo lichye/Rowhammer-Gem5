@@ -1,0 +1,12 @@
+//this is atomic version
+
+
+//__syncthreads ();
+            for(int workid=0;workid<num_nodes;workid++){
+                if(workid==nid){
+                    if(page_rank2[nid]!=newValue)
+                        atomicAdd(&page_rank2[nid], addValue);
+                }
+            }
+            
+gem5/build/GCN3_X86/gem5.opt gem5/configs/example/apu_se.py -n3 --mem-size=8GB --WB_L2 --benchmark-root=gem5-resources/src/gpu/pannotia/pagerank2/bin -c pagerank.gem5 --options="coAuthorsDBLP.graph 1"
