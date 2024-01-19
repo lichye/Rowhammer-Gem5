@@ -95,15 +95,7 @@ pagerank1(int *row, int *col, int *data, float *page_rank1, float *page_rank2,
         // Navigate the neighbor list
         for (int edge = start; edge < end; edge++) {
             nid = col[edge];
-            
-            // Transfer the PageRank value to neighbors
-
-            //page_rank2[nid] += page_rank1[tid] / (float)(end - start);
-            float newValue = page_rank2[nid]+addValue;
-            page_rank2[nid] = newValue;
-
-            if(page_rank2[nid]!=newValue)
-                atomicAdd(&page_rank2[nid], addValue);
+            atomicAdd(&page_rank2[nid], addValue);
         }
     }
 }
