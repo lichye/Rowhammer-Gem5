@@ -1,15 +1,25 @@
 1. Atomic_Rewrite:
     WriteBack_L2:
-        Time: 2.962        
-        Result：Correct
+        Time:   2.962        
+        Result  Correct
         MaxAct: 80395
-        TotalAct:340283
+        TotalAct:   340283
     WriteThroughL2:
-        Time:
-        Result:
-        MaxAct:
-        TotalAct:
+        Time:   2.981
+        Result: Correct
+        MaxAct: 77729
+        TotalAct: 348847
 2. Basic:
     WriteBack_L2:
-        Time:
+        Time:   2.972
+        Result: Correct
+        MaxAct: 79317
+        TotalAct: 339659
+    WriteThrough_L2:
+        Time:   2.9671
+        Result: Correct
+        MaxAct: 78630
+        TotalAct: 338936
+3. Half_Lockers:
+   
 

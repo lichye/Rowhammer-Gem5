@@ -73,7 +73,7 @@
  */
 __global__ void
 pagerank1(int *row, int *col, int *data, float *page_rank1, float *page_rank2,
-          const int num_nodes, const int num_edges, unsigned int page_rank2_locker)
+          const int num_nodes, const int num_edges, unsigned int* page_rank2_locker)
 {
     // Get my workitem id
     int tid = hipBlockDim_x * hipBlockIdx_x + hipThreadIdx_x;
@@ -93,12 +93,16 @@ pagerank1(int *row, int *col, int *data, float *page_rank1, float *page_rank2,
         for (int edge = start; edge < end; edge++) {
             nid = col[edge];
             // Transfer the PageRank value to neighbors
-            atomicAdd(&page_rank2[nid], page_rank1[tid] / (float)(end - start));
             
-            if (atomicExch(&(locks[id]), 1u) == 0u) {
+            
+            if (atomicExch(&(page_rank2_locker[nid]), 1u) == 0u) {
             //critical section
-                leaveLoop = true;
-                atomicExch(&(locks[id]),0u);
+                page_rank2[nid] += page_rank1[tid] / (float)(end - start);
+                atomicExch(&(page_rank2_locker[nid]),0u);
+            }
+            else{
+                atomicAdd(&page_rank2[nid], page_rank1[tid] / (float)(end - start));
+                atomicExch(&(page_rank2_locker[nid]),0u);
             }
         }
     }
