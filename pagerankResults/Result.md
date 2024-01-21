@@ -21,7 +21,7 @@
         MaxAct: 78630
         TotalAct: 338936
 3. Half_Lockers:
-   WriteBack_L2:
+    WriteBack_L2:
         Time: 2.974
         Result: Correct
         MaxAct: 55587
@@ -31,5 +31,16 @@
         Result: Correct
         MaxAct: 60063
         TotalAct: 364131
-4. 
+4. nonAtomic:
+    WriteBack_L2:
+        Time: 2.757
+        Result: X
+        MaxAct: 674
+        TotalAct: 866
+    WriteThrough_L2:
+        Time: 2.812
+        Result: X
+        MaxAct: 62875
+        TotalAct: 114915
+        
 
