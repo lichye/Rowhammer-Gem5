@@ -42,5 +42,24 @@
         Result: X
         MaxAct: 62875
         TotalAct: 114915
-        
+5. no Caculation:
+    WriteBack_L2:
+        Time: 2.728
+        Result: X
+        MaxAct: 281
+        TotalAct: 541
+    WriteThrough_L2:
+        Time: 2.736
+        Result: X
+        MaxAct: 567
+        TotalAct: 728
+6. Racing_dector:
+    WriteBack_L2:
+        Time: 2.758
+        Result: X
+        MaxAct: 679
+        TotalAct: 864
+    WriteBack_L2:
+        Time:
+
 

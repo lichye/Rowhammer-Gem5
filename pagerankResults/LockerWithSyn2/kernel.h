@@ -95,15 +95,21 @@ pagerank1(int *row, int *col, int *data, float *page_rank1, float *page_rank2,
             // Transfer the PageRank value to neighbors
             
             
-            if (atomicExch(&(page_rank2_locker[nid]), 1u) == 0u) {
-                //critical section
-                page_rank2[nid] += page_rank1[tid] / (float)(end - start);
-                atomicExch(&(page_rank2_locker[nid]),0u);
+            double grabLocker = false;
+            for(int i =0; i<20;i++){
+                if (atomicExch(&(page_rank2_locker[nid]), 1u) == 0u) {
+                    page_rank2[nid] += page_rank1[tid] / (float)(end - start);
+                    atomicExch(&(page_rank2_locker[nid]),0u);
+                    grabLocker = true;
+                }
+                __syncthreads();
+                if(grabLocker)
+                    break;
             }
-            else{
-                atomicAdd(&page_rank2[nid], page_rank1[tid] / (float)(end - start));
-                atomicExch(&(page_rank2_locker[nid]),0u);
-            }
+
+            if(!grabLocker)
+                atomicAdd(&page_rank2[nid],page_rank1[tid] / (float)(end - start));
+
         }
     }
 }
@@ -140,7 +146,7 @@ pagerank2(int *row, int *col, int *data, float *page_rank1, float *page_rank2,
  * @param   num_nodes   number of vertices
  */
 __global__ void
-inibuffer(int *row, float *page_rank1, float *page_rank2, const int num_nodes,
+inibuffer(int *row, float *page_rank1, float *page_rank2,unsigned int* page_rank2_locker,const int num_nodes,
           const int num_edges)
 {
     // Get my thread id
@@ -149,6 +155,7 @@ inibuffer(int *row, float *page_rank1, float *page_rank2, const int num_nodes,
     if (tid < num_nodes) {
         page_rank1[tid] = 1 / (float)num_nodes;
         page_rank2[tid] = 0.0f;
+        page_rank2_locker[tid] = 0u;
     }
 }
 

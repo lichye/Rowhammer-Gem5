@@ -94,16 +94,15 @@ pagerank1(int *row, int *col, int *data, float *page_rank1, float *page_rank2,
             nid = col[edge];
             // Transfer the PageRank value to neighbors
             
-            
-            if (atomicExch(&(page_rank2_locker[nid]), 1u) == 0u) {
-                //critical section
-                page_rank2[nid] += page_rank1[tid] / (float)(end - start);
-                atomicExch(&(page_rank2_locker[nid]),0u);
-            }
-            else{
-                atomicAdd(&page_rank2[nid], page_rank1[tid] / (float)(end - start));
-                atomicExch(&(page_rank2_locker[nid]),0u);
-            }
+            bool leaveLoop = false;
+
+            do{
+                if (atomicExch(&(page_rank2_locker[nid]), 1u) == 0u) {
+                    page_rank2[nid] += page_rank1[tid] / (float)(end - start);
+                    atomicExch(&(page_rank2_locker[nid]),0u);
+                }
+            }while(!leaveLoop);
+
         }
     }
 }
