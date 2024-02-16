@@ -8,7 +8,7 @@ OPTIONS:
   --analyzer-output <value>
                           Static analyzer report output format (html|plist|plist-multi-file|plist-html|sarif|text).
   --analyze               Run the static analyzer
-  -arcmt-migrate-emit-errors
+  -arcmt-migrate-emit-errorsF
                           Emit ARC errors even if the migrator can fix them
   -arcmt-migrate-report-output <value>
                           Output path for the plist report
