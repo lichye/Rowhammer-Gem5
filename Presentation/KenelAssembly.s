@@ -113,8 +113,8 @@ BB0_6:                                  ;   Parent Loop BB0_5 Depth=1
 	
 	//Try to store v7 to v[4:5]
 	// temp = Mem[v[4:5]]
-	// Mem[v[4:5]] = (v1 == v[4:5])? [v7,v8]:v1
-	// v1 = v[4:5]            
+	// Mem[v[4:5]] = (v8 == v[4:5])? v7:v1
+	// v1 = temp            
 	flat_atomic_cmpswap v1, v[4:5], v[7:8] glc
 
 	s_waitcnt vmcnt(0) lgkmcnt(0)
